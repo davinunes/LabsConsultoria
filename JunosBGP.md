@@ -61,6 +61,10 @@ ASN 64510
 Endereço: 10.1.1.2
 ```
 ### Configuração no junos
+```bash
+# Caso configurado esse parâmetro torna-se opcional definir o local-as no peer
+set routing-options autonomous-system 64496
+```
 
 ```c
 top edit interfaces ge-0/0/5 unit 0 
@@ -75,3 +79,14 @@ set peer-as 64510
 ```
 
 Feito isso a sessão estabiliza
+
+### Criando um filtro
+
+```bash
+top edit policy-options policy-statement IMPORT-V4 
+set term 1 from protocol bgp
+set term 1 then local-preference 500
+set term 1 then accept
+set term 2 then reject
+
+```
