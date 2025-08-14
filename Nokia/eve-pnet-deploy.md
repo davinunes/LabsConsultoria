@@ -52,6 +52,8 @@ Em *management_address*, utilize ```198.18.22.2/24```
 
 Em *timos_license* utilize ``` ftp://admin:admin@198.18.22.1/lic.txt ``` para iniciar automaticamente de um ftp ou utilize ``` cf3:/license.txt ``` para inserir na mão 
 
+> Dica: é possivel alterar o relogio da BIOS da vSim adicionando no final o argumento  ```-rtc base=2023-11-29``` nas opções o Qemu
+
 <img width="878" height="522" alt="image" src="https://github.com/user-attachments/assets/812a398a-f1bf-4e42-a8c2-40e135494822" />
 
 
