@@ -35,3 +35,53 @@ Ajuste as permissões:
 ```bash
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 ```
+
+Crie um Lab e adicione um nó *CPM*, aumente a quantidade de CPU e RAM pra que o boot seja mais rápido.
+
+> Utilizei 8 vcpu e 8192 de ram, mas ajuste conforme a sua disponibilidade
+
+Ajuste a versão do Qemu para 2.4.0
+
+Em UUID substitua pelo UUID presente na licença
+
+Em *timos_line*, use: ``` slot=A chassis=SR-12e card=cpm5 ```
+
+Em *management_address*, utilize ```198.18.22.2/24```
+
+Em *timos_license* utilize ``` ftp://admin:admin@198.18.22.1/lic.txt ``` para iniciar automaticamente de um ftp ou utilize ``` cf3:/license.txt ``` para inserir na mão 
+
+### Licença com servidor FTP:
+
+Crie um nó mikrotik, defina a senha de ```admin``` para ```admin```, acesse pelo winbox e coloque a licença no arquivo lic.txt. C
+
+Configure uma porta com ip ```198.18.22.1/24```
+
+Conecte a porta *mgmt* da vSim no mikrotik.
+
+Assim, durante o boot, a vSim vai baixar a licença do ftp e aplicar.
+
+### Licença sem servidor FTP:
+
+Conectar no TELNET e esperar carregar
+
+Login: ```admin```
+
+Senha: ```admin```
+
+entre na sessao file:
+
+```
+file
+vi license.txt
+```
+cole o conteudo do arquivo txt da licenca, salve (é um editor vi)
+
+ative a licenca:
+
+```
+admin system license validate 
+```
+
+reinicie com ```admin reboot```
+
+Para conferir a licença use ```show system license available-licenses```
