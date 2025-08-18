@@ -6,6 +6,8 @@
 
 
 # SW1
+
+```
 [gl:/configure]
 A:admin@7250IXR-e_01# info
  port 1/1/1 {
@@ -27,7 +29,7 @@ A:admin@7250IXR-e_01# info
  /configure global
  port 1/1/4 admin-state enable
  
-
+```
  
 
 # SW1
