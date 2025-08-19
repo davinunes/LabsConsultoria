@@ -30,6 +30,24 @@ A:admin@7250IXR-e_01# info
  port 1/1/4 admin-state enable
  
 ```
+
+# Configura Hardware
+```bash
+configure global
+show card
+card 1 card-type iom4-e
+commit
+show sfm
+sfm 1 sfm-type m-sfm5-12e
+sfm 2 sfm-type m-sfm5-12e
+sfm 3 sfm-type m-sfm5-12e
+commit
+show card
+card 1 mda 1 mda-type me10-10gb-sfp+
+card 1 mda 2 mda-type isa2-bb
+commit
+admin save
+```
  
 
 # SW1
