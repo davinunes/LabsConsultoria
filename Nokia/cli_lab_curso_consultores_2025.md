@@ -2,6 +2,8 @@
 ## Configura Hardware
 ```bash
 configure global
+system name BNG1
+commit
 show card
 card 1 card-type iom4-e
 commit
@@ -15,6 +17,14 @@ card 1 mda 1 mda-type me10-10gb-sfp+
 card 1 mda 2 mda-type isa2-bb
 commit
 admin save
+
+/configure port 1/1/1 admin-state enable
+/configure port 1/1/2 admin-state enable ethernet mode access encap-type qinq
+/configure port 1/1/4 admin-state enable ethernet mode access
+/configure port 1/1/7 admin-state enable ethernet mode access
+/configure port 1/1/8 admin-state enable ethernet mode access
+commit
+
 ```
 
 
