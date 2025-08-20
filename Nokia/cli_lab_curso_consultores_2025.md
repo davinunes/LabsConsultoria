@@ -45,8 +45,6 @@ show router interface
 /configure router ospf 0 area 0 interface "to-sw1" interface-type point-to-point
 commit
 show router ospf neighbor
-
-
 ```
 
 # BNG2
@@ -55,32 +53,40 @@ show router ospf neighbor
 ```
 
 # SW1
-
+## Configura Hardware
 ```
-[gl:/configure]
-A:admin@7250IXR-e_01# info
- port 1/1/1 {
- admin-state enable
- }
- port 1/1/2 {
- admin-state enable
- ethernet {
- mode access
- encap-type dot1q
- }
- }
- port 1/1/3 {
- admin-state enable
- }
- port 1/1/4 {
- admin-state enable
-
- /configure global
- port 1/1/4 admin-state enable
- 
+configure global
+system name Switch1
+commit
+/configure port 1/1/1 admin-state enable
+/configure port 1/1/2 admin-state enable ethernet mode access encap-type dot1q
+/configure port 1/1/3 admin-state enable
+/configure port 1/1/4 admin-state enable
+commit
+admin save
+show port
+```
+## Configura Interface
+```bash
+/configure router interface "system" ipv4 primary address 200.200.0.3 prefix-length 32
+/configure router interface "to-BNG-1" port 1/1/1 ipv4 primary address 10.0.0.1 prefix-length 31
+/configure router interface "to-SW-2" port 1/1/3 ipv4 primary address 10.0.0.2 prefix-length 31
+/configure router interface "to-SW-3" port 1/1/4 ipv4 primary address 10.0.0.9 prefix-length 31
+commit
+admin save
 ```
 
-
+## Configura OSPF
+```bash
+/configure router ospf 0 admin-state enable traffic-engineering true
+/configure router ospf 0 area 0 interface "system"
+/configure router ospf 0 area 0 interface "to-BNG-1" interface-type point-to-point
+/configure router ospf 0 area 0 interface "to-SW-3" interface-type point-to-point
+/configure router ospf 0 area 0 interface "to-sw-2" interface-type point-to-point
+commit
+admin save
+ show router ospf neighbor
+```
  
 
 # SW1
