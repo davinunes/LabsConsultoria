@@ -1,5 +1,6 @@
 # BNG1
 ## Configura Hardware
+
 ```bash
 configure global
 system name BNG1
@@ -20,16 +21,30 @@ admin save
 
 /configure port 1/1/1 admin-state enable
 /configure port 1/1/2 admin-state enable ethernet mode access encap-type qinq
-/configure port 1/1/4 admin-state enable ethernet mode access
+/configure port 1/1/4 admin-state enable ethernet mode network encap-type dot1q
 /configure port 1/1/7 admin-state enable ethernet mode access
 /configure port 1/1/8 admin-state enable ethernet mode access
 commit
+show port
+admin save
+
+```
+## Configura Interface
+```bash
+configure global
+/configure router interface "system" ipv4 primary address 200.200.0.1 prefix-length 32
+/configure router interface "to-sw1" ipv4 primary address 10.0.0.0 prefix-length 31
+/configure router interface "to-operadora-1" port 1/1/4:100 ipv4 primary address 172.16.10.2 prefix-length 30 
+commit
+
 
 ```
 
 
 # BNG2
+```bash
 
+```
 
 # SW1
 
