@@ -33,13 +33,21 @@ admin save
 ```bash
 configure global
 /configure router interface "system" ipv4 primary address 200.200.0.1 prefix-length 32
-/configure router interface "to-sw1" ipv4 primary address 10.0.0.0 prefix-length 31
+/configure router interface "to-sw1" port 1/1/1 ipv4 primary address 10.0.0.0 prefix-length 31
 /configure router interface "to-operadora-1" port 1/1/4:100 ipv4 primary address 172.16.10.2 prefix-length 30 
 commit
+show router interface
+```
+## Configura OSPF
+```bash
+/configure router ospf 0 admin-state enable traffic-engineering true
+/configure router ospf 0 area 0 interface "system"
+/configure router ospf 0 area 0 interface "to-sw1" interface-type point-to-point
+commit
+show router ospf neighbor
 
 
 ```
-
 
 # BNG2
 ```bash
