@@ -47,10 +47,12 @@ commit
 show router ospf neighbor
 ```
 ## Configura MPLS
-```python
+```bash
 /configure router ldp admin-state enable
 /configure router ldp interface-parameters interface "to-sw1" ipv4
 commit
+show router ldp session
+
 ```
 
 # BNG2
@@ -100,6 +102,14 @@ show router interface
 /configure router ospf 0 area 0 interface "to-SW1" interface-type  point-to-point
 commit
 show router ospf neighbor
+```
+## Configura MPLS
+```bash
+/configure router ldp admin-state enable
+/configure router ldp interface-parameters interface "to-SW1" ipv4
+commit
+show router ldp session
+
 ```
 
 # SW1
