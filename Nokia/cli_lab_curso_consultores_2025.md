@@ -156,7 +156,7 @@ admin save
 /configure router ldp interface-parameters interface "to-sw-2" ipv4
 commit
 show router ldp session
-
+show router ldp bindings active
 ```
  
 
