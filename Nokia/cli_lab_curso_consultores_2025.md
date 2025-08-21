@@ -46,6 +46,12 @@ show router interface
 commit
 show router ospf neighbor
 ```
+## Configura MPLS
+```python
+/configure router ldp admin-state enable
+/configure router ldp interface-parameters interface "to-sw1" ipv4
+commit
+```
 
 # BNG2
 ## Configura Hardware
