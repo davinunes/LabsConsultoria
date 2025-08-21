@@ -147,6 +147,17 @@ commit
 admin save
  show router ospf neighbor
 ```
+
+## Configura MPLS
+```bash
+/configure router ldp admin-state enable
+/configure router ldp interface-parameters interface "to-BNG-1" ipv4
+/configure router ldp interface-parameters interface "to-SW-3" ipv4
+/configure router ldp interface-parameters interface "to-sw-2" ipv4
+commit
+show router ldp session
+
+```
  
 
 # SW2
@@ -187,6 +198,17 @@ admin save
  show router ospf neighbor
 ```
 
+## Configura MPLS
+```bash
+/configure router ldp admin-state enable
+/configure router ldp interface-parameters interface "to-BNG-2" ipv4
+/configure router ldp interface-parameters interface "to-SW-3" ipv4
+/configure router ldp interface-parameters interface "to-sw-1" ipv4
+commit
+show router ldp session
+
+```
+
 
 # SW3
 ## Configura Hardware
@@ -219,4 +241,14 @@ admin save
 commit
 admin save
  show router ospf neighbor
+```
+
+## Configura MPLS
+```bash
+/configure router ldp admin-state enable
+/configure router ldp interface-parameters interface "to-SW-1" ipv4
+/configure router ldp interface-parameters interface "to-SW-2" ipv4
+commit
+show router ldp session
+
 ```
