@@ -135,6 +135,7 @@ show router ldp session
 commit
 admin save
 
+show router mpls interface
 ```
 
 # SW1
@@ -200,6 +201,7 @@ show router tunnel-table
 commit
 admin save
 
+show router mpls interface
 ```
  
 
@@ -270,6 +272,7 @@ show router ldp session
 commit
 admin save
 
+show router mpls interface
 ```
 
 
@@ -332,4 +335,5 @@ show router ldp session
 commit
 admin save
 
+show router mpls interface
 ```
