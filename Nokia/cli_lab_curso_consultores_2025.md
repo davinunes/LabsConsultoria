@@ -68,6 +68,25 @@ admin save
 
 ```
 
+
+## Configura LSPs
+```bash
+/configure router mpls path loose1 admin-state enable
+/configure router mpls path loose2 admin-state enable
+
+/configure router mpls lsp "to-BNG-02" admin-state enable
+/configure router mpls lsp "to-BNG-02" type p2p-rsvp to 200.200.0.2
+/configure router mpls lsp "to-BNG-02" path-computation-method local-cspf
+/configure router mpls lsp "to-BNG-02" primary "loose1" exclude-admin-group group "RED"
+/configure router mpls lsp "to-BNG-02" secondary "loose2" exclude-admin-group group "BLUE"
+
+commit
+admin save
+
+show router mpls interface
+```
+
+
 # BNG2
 ## Configura Hardware
 
@@ -132,6 +151,23 @@ show router ldp session
 /configure router mpls interface "to-SW1"
 /configure router rsvp admin-state enable
 /configure router rsvp interface "to-SW1"
+commit
+admin save
+
+show router mpls interface
+```
+
+## Configura LSPs
+```bash
+/configure router mpls path loose1 admin-state enable
+/configure router mpls path loose2 admin-state enable
+
+/configure router mpls lsp "to-BNG-01" admin-state enable
+/configure router mpls lsp "to-BNG-01" type p2p-rsvp to 200.200.0.1
+/configure router mpls lsp "to-BNG-01" path-computation-method local-cspf
+/configure router mpls lsp "to-BNG-01" primary "loose1" exclude-admin-group group "RED"
+/configure router mpls lsp "to-BNG-01" secondary "loose2" exclude-admin-group group "BLUE"
+
 commit
 admin save
 
