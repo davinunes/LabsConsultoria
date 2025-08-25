@@ -124,6 +124,18 @@ commit
 show router ldp session
 
 ```
+## Configura RSVP
+```bash
+/configure routing-options if-attribute admin-group BLUE value 10
+/configure routing-options if-attribute admin-group RED value 20
+/configure router mpls admin-state enable
+/configure router mpls interface "to-SW1"
+/configure router rsvp admin-state enable
+/configure router rsvp interface "to-SW1"
+commit
+admin save
+
+```
 
 # SW1
 ## Configura Hardware
