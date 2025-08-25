@@ -131,6 +131,30 @@ admin save
 
 ## Configura iBGP
 ```
+/configure router bgp group IBGP type internal
+/configure router bgp group IBGP cluster cluster-id 1.1.1.1
+/configure router bgp group IBGP export policy export-ibgp
+
+/configure router bgp neighbor 200.200.0.2 group "IBGP"
+/configure router bgp neighbor 200.200.0.3 group "IBGP"
+/configure router bgp neighbor 200.200.0.4 group "IBGP"
+/configure router bgp neighbor 200.200.0.5 group "IBGP"
+
+
+/configure policy-options prefix-list rota-default prefix 0.0.0.0/0 type exact
+/configure policy-options prefix-list rotas-operadora-01 prefix 80.80.0.0/16 type longer
+
+/configure policy-options policy-statement export-ibgp entry 5 from prefix-list "rota-default" protocol name bgp
+/configure policy-options policy-statement export-ibgp entry 5 action action-type accept next-hop self
+
+/configure policy-options policy-statement export-ibgp entry 10 from prefix-list "rotas-operadora-01" protocol name bgp
+/configure policy-options policy-statement export-ibgp entry 10 action action-type accept next-hop self
+
+/configure policy-options policy-statement export-ibgp entry 11 from protocol name bgp
+/configure policy-options policy-statement export-ibgp entry 11 action action-type accept
+
+
+show router bgp summary all
 
 ```
 
