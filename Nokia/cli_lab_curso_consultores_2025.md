@@ -230,6 +230,41 @@ show router tunnel-table
 /configure router mpls lsp "to-BNG-01" fast-reroute frr-method one-to-one node-protect false
 ```
 
+## Configura eBGP
+```
+/configure router autonomous-system 65501
+
+/configure router bgp admin-state enable
+/configure router bgp group EBGP peer-as 65501 type external
+/configure router bgp group EBGP family ipv4 true
+/configure router bgp group EBGP local-as as-number 65001
+/configure router bgp group EBGP import policy import-bgp
+/configure router bgp group EBGP export policy export-bgp
+
+/configure router bgp neighbor 172.16.20.1 group "EBGP"
+
+/configure router static-routes route 200.200.0.0/22 route-type unicast blackhole admin-state enable
+
+/configure policy-options prefix-list IPs-internos prefix 200.200.0.0/22 type exact
+
+/configure policy-options policy-statement export-bgp entry 10 from prefix-list "IPs-internos"
+/configure policy-options policy-statement export-bgp entry 10 action action-type accept
+/configure policy-options policy-statement export-bgp default-action  action-type reject
+
+/configure policy-options policy-statement import-bgp entry 10 from protocol name bgp
+/configure policy-options policy-statement import-bgp entry 10 action action-type accept
+/configure policy-options policy-statement import-bgp default-action action-type reject
+
+commit
+admin save
+
+```
+
+## Configura iBGP
+```
+
+```
+
 # SW1
 ## Configura Hardware
 ```
