@@ -252,6 +252,26 @@ show router ldp session
 
 ```
 
+## Configura RSVP
+```bash
+/configure routing-options if-attribute admin-group BLUE value 10
+/configure routing-options if-attribute admin-group RED value 20
+/configure router mpls admin-state enable
+/configure router rsvp admin-state enable
+
+/configure router mpls interface "to-BNG-2"
+/configure router mpls interface "to-sw-1" admin-group "BLUE"
+/configure router mpls interface "to-SW-3" admin-group "RED"
+
+/configure router rsvp interface "to-BNG-2"
+/configure router rsvp interface "to-sw-1"
+/configure router rsvp interface "to-SW-3"
+
+commit
+admin save
+
+```
+
 
 # SW3
 ## Configura Hardware
