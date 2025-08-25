@@ -83,7 +83,7 @@ admin save
 commit
 admin save
 
-show router mpls interface
+show router mpls lsp "to-BNG-02" detail
 ```
 
 
@@ -171,7 +171,7 @@ show router mpls interface
 commit
 admin save
 
-show router mpls interface
+show router mpls lsp "to-BNG-01" detail
 ```
 
 # SW1
