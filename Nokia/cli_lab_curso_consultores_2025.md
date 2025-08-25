@@ -94,6 +94,12 @@ show router ospf opaque-database
 show router ospf opaque-database adv-router 200.200.0.5 detail
 ```
 
+## Configura FRR
+```
+/configure router mpls lsp "to-BNG-02" fast-reroute frr-method one-to-one node-protect false
+```
+
+
 
 # BNG2
 ## Configura Hardware
@@ -182,6 +188,11 @@ admin save
 show router mpls lsp "to-BNG-01" detail
 show router mpls lsp "to-BNG-01" path detail
 show router tunnel-table
+```
+
+## Configura FRR
+```
+/configure router mpls lsp "to-BNG-01" fast-reroute frr-method one-to-one node-protect false
 ```
 
 # SW1
