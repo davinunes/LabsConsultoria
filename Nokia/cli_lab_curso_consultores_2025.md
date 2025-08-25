@@ -84,6 +84,14 @@ commit
 admin save
 
 show router mpls lsp "to-BNG-02" detail
+show router mpls lsp "to-BNG-02" path detail
+show router tunnel-table
+oam lsp-trace rsvp-te lsp-name "to-BNG-02" path "loose1"
+oam lsp-trace rsvp-te lsp-name "to-BNG-02" path "loose2"
+show router rsvp session
+show router rsvp session transit
+show router ospf opaque-database
+show router ospf opaque-database adv-router 200.200.0.5 detail
 ```
 
 
@@ -172,6 +180,8 @@ commit
 admin save
 
 show router mpls lsp "to-BNG-01" detail
+show router mpls lsp "to-BNG-01" path detail
+show router tunnel-table
 ```
 
 # SW1
