@@ -157,6 +157,7 @@ admin save
 commit
 show router ldp session
 show router ldp bindings active
+show router tunnel-table
 ```
  
 
