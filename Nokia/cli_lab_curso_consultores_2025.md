@@ -155,7 +155,11 @@ admin save
 
 
 show router bgp summary all
-
+show router bgp neighbor "172.16.10.1" advertised-routes
+show router bgp neighbor "172.16.10.1" received-routes
+show router route-table protocol bgp
+show router bgp routes
+show router bgp routes 0.0.0.0/0 hunt
 ```
 
 
