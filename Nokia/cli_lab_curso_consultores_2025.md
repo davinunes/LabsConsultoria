@@ -286,7 +286,16 @@ admin save
 
 ## Configura iBGP
 ```
+/configure router bgp group IBGP next-hop-self true
+/configure router bgp group IBGP type internal
+/configure router bgp group IBGP family ipv4 true
+/configure router bgp group IBGP export policy export-ibgp
+/configure router bgp neighbor 200.200.0.1 group "IBGP"
 
+/configure policy-options policy-statement export-ibgp entry 11 from protocol name bgp
+/configure policy-options policy-statement export-ibgp entry 11 action action-type accept
+commit
+admin save
 ```
 
 # SW1
