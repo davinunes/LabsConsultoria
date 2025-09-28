@@ -363,6 +363,16 @@ admin save
 
 show router mpls interface
 ```
+
+## Configura iBGP
+```
+/configure router bgp admin-state enable
+/configure router bgp group IBGP type internal
+/configure router bgp group IBGP family ipv4 true
+/configure router bgp neighbor 200.200.0.1 group "IBGP"
+commit
+admin save
+```
  
 
 # SW2
@@ -436,6 +446,17 @@ show router mpls interface
 ```
 
 
+## Configura iBGP
+```
+/configure router bgp admin-state enable
+/configure router bgp group IBGP type internal
+/configure router bgp group IBGP family ipv4 true
+/configure router bgp neighbor 200.200.0.1 group "IBGP"
+commit
+admin save
+```
+
+
 # SW3
 ## Configura Hardware
 ```
@@ -496,4 +517,15 @@ commit
 admin save
 
 show router mpls interface
+```
+
+
+## Configura iBGP
+```
+/configure router bgp admin-state enable
+/configure router bgp group IBGP type internal
+/configure router bgp group IBGP family ipv4 true
+/configure router bgp neighbor 200.200.0.1 group "IBGP"
+commit
+admin save
 ```
