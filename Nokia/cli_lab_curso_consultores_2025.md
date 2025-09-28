@@ -162,7 +162,17 @@ show router bgp routes
 show router bgp routes 0.0.0.0/0 hunt
 ```
 
+## Configura 6PE - Tunnel IPv6
+```
+/configure router interface "to-operadora-1-ipv6" port 1/1/4:101
+/configure router interface "to-operadora-1-ipv6" ipv6 address 2000:1:c000::2 prefix-length 126
+/configure router interface "system"
+/configure router interface "system" ipv4 local-dhcp-server LOCAL-DHCPV4-SERVER
+/configure router interface "system" ipv6 address 2001:1111::1 prefix-length 128
 
+/configure router dhcp-server dhcpv4 LOCAL-DHCPV4-SERVER admin-state enable
+
+```
 
 # BNG2
 ## Configura Hardware
@@ -300,6 +310,18 @@ admin save
 /configure policy-options policy-statement export-ibgp entry 11 action action-type accept
 commit
 admin save
+```
+
+## Configura 6PE - Tunnel IPv6
+```
+/configure router interface "to-operadora-1-ipv6" port 1/1/4:201
+/configure router interface "to-operadora-1-ipv6" ipv6 address 2000:2:c000::2 prefix-length 126
+/configure router interface "system"
+/configure router interface "system" ipv4 local-dhcp-server LOCAL-DHCPV4-SERVER
+/configure router interface "system" ipv6 address 2001:1111::2 prefix-length 128
+
+/configure router dhcp-server dhcpv4 LOCAL-DHCPV4-SERVER admin-state enable
+
 ```
 
 # SW1
