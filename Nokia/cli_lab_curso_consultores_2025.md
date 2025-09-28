@@ -162,6 +162,7 @@ show router bgp routes
 show router bgp routes 0.0.0.0/0 hunt
 ```
 
+
 ## Configura 6PE - Tunnel IPv6
 ```
 /configure router interface "to-operadora-1-ipv6" port 1/1/4:101
@@ -171,6 +172,26 @@ show router bgp routes 0.0.0.0/0 hunt
 /configure router interface "system" ipv6 address 2001:1111::1 prefix-length 128
 
 /configure router dhcp-server dhcpv4 LOCAL-DHCPV4-SERVER admin-state enable
+
+```
+
+## EBGP6 Operadora
+```
+/configure router bgp group EBGPv6 type external peer-as 65500 family ipv6  true
+/configure router bgp group EBGPv6 local-as as-number 65001
+/configure router bgp group EBGPv6 import policy import-bgp
+/configure router bgp group EBGPv6 export policy export-ebgp-v6
+/configure router bgp neighbor "2000:1:c000::1" group "EBGPv6"
+
+/configure router static-routes route 2001:1111::/32 route-type unicast blackhole admin-state enable
+
+/configure policy-options prefix-list "IPs-internos-v6"  prefix 2001:1111::/32 type exact 
+/configure policy-options policy-statement "export-ebgp-v6" entry 10 from prefix-list "IPs-internos-v6"
+/configure policy-options policy-statement "export-ebgp-v6" entry 10 action action-type accept
+/configure policy-options policy-statement "export-ebgp-v6" default-action action-type reject
+
+commit
+admin save
 
 ```
 
@@ -323,6 +344,29 @@ admin save
 /configure router dhcp-server dhcpv4 LOCAL-DHCPV4-SERVER admin-state enable
 
 ```
+
+## EBGP6 Operadora
+```
+/configure router bgp group EBGPv6 type external 
+/configure router bgp group EBGPv6 peer-as 65501 
+/configure router bgp group EBGPv6 family ipv6  true
+/configure router bgp group EBGPv6 local-as as-number 65001
+/configure router bgp group EBGPv6 import policy import-bgp
+/configure router bgp group EBGPv6 export policy export-ebgp-v6
+/configure router bgp neighbor "2000:2:c000::1" group "EBGPv6"
+
+/configure router static-routes route 2001:1111::/32 route-type unicast blackhole admin-state enable
+
+/configure policy-options prefix-list "IPs-internos-v6"  prefix 2001:1111::/32 type exact 
+/configure policy-options policy-statement "export-ebgp-v6" entry 10 from prefix-list "IPs-internos-v6"
+/configure policy-options policy-statement "export-ebgp-v6" entry 10 action action-type accept
+/configure policy-options policy-statement "export-ebgp-v6" default-action action-type reject
+
+commit
+admin save
+
+```
+
 
 # SW1
 ## Configura Hardware
