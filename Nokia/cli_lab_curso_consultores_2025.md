@@ -443,6 +443,30 @@ show router mpls interface
 commit
 admin save
 ```
+
+## Configura VPLS
+```
+/configure service sdp 12 admin-state enable
+/configure service sdp 12 delivery-type mpls ldp true
+/configure service sdp 12 far-end ip-address 200.200.0.4
+
+/configure service sdp 13 admin-state enable
+/configure service sdp 13 delivery-type mpls ldp true
+/configure service sdp 13 far-end ip-address 200.200.0.5
+
+/configure service vpls "OLT-01" admin-state enable
+/configure service vpls "OLT-01" service-id 1000 customer 1
+/configure service vpls "OLT-01" spoke-sdp 13:1000 vc-type ether
+/configure service vpls "OLT-01" sap 1/1/2:1000
+
+/configure service vpls "OLT-02" admin-state enable
+/configure service vpls "OLT-02" service-id 2000 customer 1
+/configure service vpls "OLT-02" spoke-sdp 12:2000 vc-type ether
+/configure service vpls "OLT-02" sap 1/1/2:2000
+
+commit
+admin save
+```
  
 
 # SW2
@@ -526,6 +550,30 @@ commit
 admin save
 ```
 
+## Configura VPLS
+```
+/configure service sdp 21 admin-state enable
+/configure service sdp 21 delivery-type mpls ldp true
+/configure service sdp 21 far-end ip-address 200.200.0.3
+
+/configure service sdp 23 admin-state enable
+/configure service sdp 23 delivery-type mpls ldp true
+/configure service sdp 23 far-end ip-address 200.200.0.5
+
+/configure service vpls "OLT-01" admin-state enable
+/configure service vpls "OLT-01" service-id 1000 customer 1
+/configure service vpls "OLT-01" spoke-sdp 23:1000 vc-type ether
+/configure service vpls "OLT-01" sap 1/1/2:1000
+
+/configure service vpls "OLT-02" admin-state enable
+/configure service vpls "OLT-02" service-id 2000 customer 1
+/configure service vpls "OLT-02" spoke-sdp 21:2000 vc-type ether
+/configure service vpls "OLT-02" sap 1/1/2:2000
+/configure service vpls "OLT-02" sap 1/1/5:*
+
+commit
+admin save
+```
 
 # SW3
 ## Configura Hardware
@@ -596,6 +644,27 @@ show router mpls interface
 /configure router bgp group IBGP type internal
 /configure router bgp group IBGP family ipv4 true
 /configure router bgp neighbor 200.200.0.1 group "IBGP"
+commit
+admin save
+```
+
+## Configura VPLS
+```
+/configure service sdp 31 admin-state enable
+/configure service sdp 31 delivery-type mpls ldp true
+/configure service sdp 31 far-end ip-address 200.200.0.3
+
+/configure service sdp 32 admin-state enable
+/configure service sdp 32 delivery-type mpls ldp true
+/configure service sdp 32 far-end ip-address 200.200.0.4
+
+/configure service vpls "OLT-01" admin-state enable
+/configure service vpls "OLT-01" service-id 1000 customer 1
+/configure service vpls "OLT-01" spoke-sdp 31:1000 vc-type ether
+/configure service vpls "OLT-01" spoke-sdp 32:1000 vc-type ether
+/configure service vpls "OLT-01" sap 1/1/3:*
+
+
 commit
 admin save
 ```
