@@ -168,7 +168,6 @@ show router bgp routes 0.0.0.0/0 hunt
 /configure router interface "to-operadora-1-ipv6" port 1/1/4:101
 /configure router interface "to-operadora-1-ipv6" ipv6 address 2000:1:c000::2 prefix-length 126
 /configure router interface "system"
-/configure router interface "system" ipv4 local-dhcp-server LOCAL-DHCPV4-SERVER
 /configure router interface "system" ipv6 address 2001:1111::1 prefix-length 128
 
 /configure router dhcp-server dhcpv4 LOCAL-DHCPV4-SERVER admin-state enable
@@ -244,6 +243,59 @@ admin save
 /configure subscriber-mgmt local-user-db "LUDB-Fallback-only" ppp match-list mac host default ipv6 delegated-prefix-pool "POOL-IPv6-DEFAULT" slaac-prefix-pool "POOL-IPv6-DEFAULT" force-ipv6cp true
 
 show aaa radius-server-policy "AAA“
+
+
+/configure subscriber-mgmt sub-profile "SUB-DEFAULT" radius-accounting policy "POLITICA_ACCT" session-optimized-stop true
+/configure subscriber-mgmt sla-profile Default description "perfil padrao"
+/configure subscriber-mgmt sla-profile Default egress qos sap-egress policy-name 20
+/configure subscriber-mgmt sla-profile Default host-limits overall 3
+/configure subscriber-mgmt sla-profile Default ingress ip-filter "NAT-Deterministico"
+/configure subscriber-mgmt sla-profile Default ingress qos sap-ingress policy-name 10
+/configure subscriber-mgmt sub-ident-policy "SUBSC_ID" sla-profile-map use-direct-map-as-default true
+/configure subscriber-mgmt sub-ident-policy "SUBSC_ID" sub-profile-map use-direct-map-as-default true
+/configure subscriber-mgmt ppp-policy "POLITICA_PPP" cookies false ppp-authentication pap ppp-initial-delay true ppp-mtu 1500 unique-sid per-sap keepalive interval 20
+/configure subscriber-mgmt msap-policy "MSAP-DEFAULT" sub-sla-mgmt subscriber-limit 131071 sub-ident-policy "SUBSC_ID" defaults sla-profile "Default" sub-profile "SUB-DEFAULT" subscriber-id  auto-id
+/configure subscriber-mgmt msap-policy "MSAP-DEFAULT" sub-sla-mgmt subscriber-limit 131071 sub-ident-policy "SUBSC_ID" single-sub-parameters profiled-traffic-only true
+/configure subscriber-mgmt msap-policy "MSAP-DEFAULT" ies-vprn-only-sap-parameters anti-spoof next-hop-ip-and-mac-addr
+
+/configure qos sap-ingress "10" description "UPLOAD" policer 1 rate pir max cir max
+/configure qos sap-ingress "10" fc af policer 1
+/configure qos sap-ingress "10" fc be policer 1
+/configure qos sap-ingress "10" fc ef policer 1
+/configure qos sap-ingress "10" fc h1 policer 1
+/configure qos sap-ingress "10" fc h2 policer 1
+/configure qos sap-ingress "10" fc l1 policer 1
+/configure qos sap-ingress "10" fc l2 policer 1
+/configure qos sap-ingress "10" fc nc policer 1
+/configure qos sap-egress "20" description "DOWNLOAD"
+/configure qos sap-egress "20" queue 1 rate pir max cir max
+/configure qos sap-egress "20" fc be queue 1
+
+/configure filter match-list ip-prefix-list "ip-system" prefix 20.1.1.0/31 
+/configure filter match-list ip-prefix-list "ip-system" prefix 200.200.0.0/22 
+/configure filter match-list ip-prefix-list "ip-system" prefix 200.200.0.1/32 
+/configure filter match-list ip-prefix-list "ip-system" prefix 200.200.0.2/32
+
+/configure filter ip-filter "NAT-Deterministico" default-action accept filter-id 100 entry 1 match dst-ip ip-prefix-list "ip-system"
+/configure filter ip-filter "NAT-Deterministico" default-action accept filter-id 100 entry 1 action accept
+/configure filter ip-filter "NAT-Deterministico" default-action accept filter-id 100 entry 10 match src-ip address 100.64.0.0/16
+/configure filter ip-filter "NAT-Deterministico" default-action accept filter-id 100 entry 10 action nat
+
+commit 
+
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" admin-state enable
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool-selection use-gi-address scope pool
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool-selection use-pool-from-client
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool "POOL-BNG-PPPoE" description "Pool para teste PPPoE" minimum-free percent 3
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool "POOL-BNG-PPPoE" options option dns-server ipv4-address 8.8.8.8
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool "POOL-BNG-PPPoE" subnet 100.64.0.0/24 options option default-router ipv4-address 100.64.0.1
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool "POOL-BNG-PPPoE" subnet 100.64.0.0/24 address-range 100.64.0.0 end 100.64.0.255
+/configure router dhcp-server dhcpv4 "LOCAL-DHCPV4-SERVER" pool "POOL-BNG-PPPoE" subnet 100.64.0.0/24 exclude-addresses 100.64.0.1 end 100.64.0.1
+
+/configure router interface "system" ipv4 local-dhcp-server LOCAL-DHCPV4-SERVER
+
+commit
+
 
 ```
 
