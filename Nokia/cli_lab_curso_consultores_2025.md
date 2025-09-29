@@ -195,6 +195,58 @@ admin save
 
 ```
 
+# BRAS
+
+## Configurar BNG
+
+```
+
+/configure router radius server "Radius" address 10.4.1.2 secret radius accept-coa true
+/configure aaa radius server-policy AAA servers timeout 10
+/configure aaa radius server-policy AAA servers retry-count 5 router-instance "Base"
+/configure aaa radius server-policy AAA servers source-address 200.200.0.1
+/configure aaa radius server-policy AAA servers server 1 server-name Radius
+/configure aaa radius server-policy "AAA" acct-on-off
+
+
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT"
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" description "POLITICA_ACCOUNTING_PARA_ASSINANTES"
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" radius-server-policy "AAA"
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" session-id-format number
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" queue-instance-accounting interim-update false
+
+
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" session-accounting admin-state enable
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" session-accounting interim-update true host-update true
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" update-interval interval 720
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" include-radius-attribute acct-authentic true
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" include-radius-attribute acct-authentic true acct-delay-time true acct-triggered-reason true error-code true called-station-id true circuit-id true delegated-ipv6-prefix true
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" include-radius-attribute framed-interface-id true framed-ip-address true framed-ip-netmask true framed-ipv6-prefix true framed-ipv6-route true framed-route true ipv6-address true mac-address true nas-identifier true nat-port-range true remote-id true sla-profile true std-acct-attributes true sub-profile true subscriber-id true tunnel-server-attrs true user-name true
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" include-radius-attribute calling-station-id
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" include-radius-attribute nas-port-id
+/configure subscriber-mgmt radius-accounting-policy "POLITICA_ACCT" include-radius-attribute nas-port-type
+
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH"
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" description "POLITICA_AUTENTICACAO_PARA_ASSINANTES"
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" pppoe-access-method pap-chap
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" radius-server-policy "AAA" fallback action user-db "LUDB-Fallback-only"
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" include-radius-attribute access-loop-options true called-station-id true circuit-id true dhcp-options true dhcp-vendor-class-id true mac-address true nas-identifier true pppoe-service-name true sap-session-index true tunnel-server-attrs true
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" include-radius-attribute  acct-session-id type session
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" include-radius-attribute calling-station-id
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" include-radius-attribute nas-port-id
+/configure subscriber-mgmt radius-authentication-policy "POLITICA_AUTH" include-radius-attribute nas-port-type
+
+
+/configure subscriber-mgmt local-user-db "LUDB-Fallback-only" admin-state enable
+/configure subscriber-mgmt local-user-db "LUDB-Fallback-only" ppp match-list mac host default admin-state enable
+/configure subscriber-mgmt local-user-db "LUDB-Fallback-only" ppp match-list mac host default host-identification  service-name "local-users"
+/configure subscriber-mgmt local-user-db "LUDB-Fallback-only" ppp match-list mac host default ipv4 address pool primary "POOL-BNG-PPPoE"
+/configure subscriber-mgmt local-user-db "LUDB-Fallback-only" ppp match-list mac host default ipv6 delegated-prefix-pool "POOL-IPv6-DEFAULT" slaac-prefix-pool "POOL-IPv6-DEFAULT" force-ipv6cp true
+
+show aaa radius-server-policy "AAA“
+
+```
+
 # BNG2
 ## Configura Hardware
 
