@@ -302,6 +302,49 @@ commit
 
 ## VPLS
 ```
+/configure service vpls VPLS_BANDA_LARGA 
+admin-state enable
+service-id 50
+customer 1
+
+capture-sap 1/1/2:1000.*
+radius-auth-policy "POLITICA_AUTH"
+allow-dot1q-msaps true
+track-srrp 1 trigger-packet pppoe true
+msap-defaults policy "MSAP-DEFAULT" group-interface BNG_INTF_1000
+pppoe policy "POLITICA_PPP"
+
+
+/configure service vpls "VPLS_BANDA_LARGA" capture-sap 1/1/2:2000.*
+allow-dot1q-msaps true track-srrp 2
+trigger-packet pppoe true
+msap-defaults policy "MSAP-DEFAULT" service-name BNG_IES group-interface BNG_INTF_2000
+pppoe policy "POLITICA_PPP"
+
+
+/configure service ies BNG_IES admin-state enable description SERVICO_BANDA_LARGA service-id 5 customer 1
+/configure service ies BNG_IES subscriber-interface SI_INTERNET
+admin-state enable
+description "interface Internet"
+ipv4 unnumbered ip-int-name system
+
+group-interface BNG_INTF_1000
+admin-state enable radius-auth-policy "POLITICA_AUTH"
+oper-up-while-empty true dynamic-routes-track-srrp
+back
+ipv4 urpf-check mode strict-no-ecmp
+ipv4 neighbor-discovery local-proxy-arp false
+ipv4 dhcp admin-state enable server 200.200.0.1
+ipv4 dhcp trusted true gi-address 100.64.0.1 client-applications dipv4 dhcp trusted true gi-address 100.64.0.1 client-applications dhcp false ppp true
+
+pppoe admin-state enable
+pppoe policy "POLITICA_PPP" session-limit 130 sap-session-limit 123
+sap 1/1/2:1.4081
+back
+
+
+commit
+admin save
 
 ```
 
